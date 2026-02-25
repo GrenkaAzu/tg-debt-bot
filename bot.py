@@ -34,7 +34,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(
 )
 
 client = gspread.authorize(creds)
-SHEET_URL = "https://docs.google.com/spreadsheets/d/17_xS6lVQn1G3M8AwU04Oa4PIgY6BlgB0T8mDlsysXuo/edit?gid=0#gid=0"
+
 sheet = client.open_by_url(os.environ["SHEET_URL"]).sheet1
 
 
@@ -118,4 +118,5 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
