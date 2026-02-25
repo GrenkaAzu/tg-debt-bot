@@ -18,6 +18,8 @@ import os
 import json
 
 TOKEN = os.environ["BOT_TOKEN"]
+if not TOKEN:
+    raise ValueError("BOT_TOKEN не задан")
 
 scope = [
     "https://spreadsheets.google.com/feeds",
@@ -32,7 +34,8 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(
 )
 
 client = gspread.authorize(creds)
-sheet = client.open("no-receipt-no-money-bot").sheet1
+SHEET_URL = "https://docs.google.com/spreadsheets/d/17_xS6lVQn1G3M8AwU04Oa4PIgY6BlgB0T8mDlsysXuo/edit?gid=0#gid=0"
+sheet = client.open_by_url(os.environ["SHEET_URL"]).sheet1
 
 
 # --- FSM ---
@@ -115,3 +118,4 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
