@@ -9,8 +9,11 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 
+import os
+import json
+
 TOKEN = os.environ["BOT_TOKEN"]
-# --- Google Sheets подключение ---
+
 scope = [
     "https://spreadsheets.google.com/feeds",
     "https://www.googleapis.com/auth/drive"
@@ -81,4 +84,5 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
