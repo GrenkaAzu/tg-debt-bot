@@ -26,7 +26,7 @@ scope = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-creds_dict = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+creds_raw = os.getenv("GOOGLE_CREDENTIALS")
 if not creds_raw:
     raise ValueError("GOOGLE_CREDENTIALS не задан")
 
@@ -126,6 +126,7 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
 
