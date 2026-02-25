@@ -27,6 +27,10 @@ scope = [
 ]
 
 creds_dict = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+if not creds_raw:
+    raise ValueError("GOOGLE_CREDENTIALS не задан")
+
+creds_dict = json.loads(creds_raw)
 
 creds = ServiceAccountCredentials.from_json_keyfile_dict(
     creds_dict,
@@ -35,7 +39,11 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(
 
 client = gspread.authorize(creds)
 
-sheet = client.open_by_url(os.environ["SHEET_URL"]).sheet1
+sheet_url = os.getenv("SHEET_URL")
+if not sheet_url:
+    raise ValueError("SHEET_URL не задан")
+
+sheet = client.open_by_url(sheet_url).sheet1
 
 
 # --- FSM ---
@@ -106,7 +114,7 @@ async def check_debt(message: Message, state: FSMContext):
 
         response += "\n"
 
-    await message.answer(response)
+    await message.answer(response, reply_markup=keyboard)
     await state.clear()
 
 
@@ -118,5 +126,6 @@ async def main():
 if __name__ == "__main__":
 
     asyncio.run(main())
+
 
 
